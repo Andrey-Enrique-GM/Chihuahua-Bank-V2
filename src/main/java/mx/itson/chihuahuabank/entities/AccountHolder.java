@@ -18,4 +18,6 @@ public class AccountHolder
     @SerializedName ("zip-code")
     private String zipCode;
     
+    
+    
 }
