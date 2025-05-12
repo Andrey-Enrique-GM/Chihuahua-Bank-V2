@@ -101,6 +101,12 @@ public class Account
         System.err.println("Error: " + ex.getMessage());
     } return a;  
     }
+    public static Account interes(double porcentaje){
+        //TODO logica para calcular interes diario
+        return null;
+        //TODO logica para calcular interes diario
+       
+    }
 }
 /*
 === Titulo

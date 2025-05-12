@@ -60,6 +60,7 @@ public class AccountFrame extends javax.swing.JFrame {
         lblTitile.setText("Chihuahua Bank");
 
         lblNameHolder.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblNameHolder.setText("Name:");
 
         lblProduct.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblProduct.setForeground(new java.awt.Color(0, 51, 255));
@@ -126,7 +127,7 @@ public class AccountFrame extends javax.swing.JFrame {
                     .addComponent(lblNameHolder))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addContainerGap(438, Short.MAX_VALUE))
+                .addContainerGap(436, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,7 +163,7 @@ public class AccountFrame extends javax.swing.JFrame {
                         
                         
                         // ELIMINE ALGUIEN ESTO DEL DESIGN :00
-                        lblNameHolder.setText(a.getAccountHolder().getName());
+                        lblNameHolder.setText("Name: " + a.getAccountHolder().getName());
                         
                     } catch (IOException ex) {
                         ex.printStackTrace();
