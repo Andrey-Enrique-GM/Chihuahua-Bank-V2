@@ -32,10 +32,13 @@ public class AccountFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         btnFile = new javax.swing.JButton();
-        lblTest = new javax.swing.JLabel();
+        lblAccountNumber = new javax.swing.JLabel();
         lblTitile = new javax.swing.JLabel();
         lblNameHolder = new javax.swing.JLabel();
-        jblText = new javax.swing.JLabel();
+        lblProduct = new javax.swing.JLabel();
+        lblCurrency = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,18 +51,31 @@ public class AccountFrame extends javax.swing.JFrame {
             }
         });
 
-        lblTest.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        lblTest.setForeground(new java.awt.Color(204, 0, 51));
-        lblTest.setText("...");
+        lblAccountNumber.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        lblAccountNumber.setForeground(new java.awt.Color(204, 0, 51));
+        lblAccountNumber.setText("02");
 
-        lblTitile.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lblTitile.setForeground(new java.awt.Color(0, 0, 255));
+        lblTitile.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        lblTitile.setForeground(new java.awt.Color(102, 0, 102));
         lblTitile.setText("Chihuahua Bank");
 
         lblNameHolder.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        jblText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jblText.setText("Account Number");
+        lblProduct.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblProduct.setForeground(new java.awt.Color(0, 51, 255));
+        lblProduct.setText("01");
+
+        lblCurrency.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        lblCurrency.setForeground(new java.awt.Color(204, 0, 51));
+        lblCurrency.setText("03");
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 17)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel1.setText("Account Details ---");
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 17)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 0, 204));
+        jLabel2.setText("Account Owner ---");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,33 +86,47 @@ public class AccountFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblTitile)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNameHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 134, Short.MAX_VALUE))
+                            .addComponent(btnFile, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(49, 49, 49))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnFile, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
-                        .addComponent(lblNameHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTest, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jblText))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(65, 65, 65)
+                                        .addComponent(lblCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(lblProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(lblTitile)
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitile)
+                    .addComponent(btnFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblProduct)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblAccountNumber)
+                        .addComponent(lblCurrency))
                     .addComponent(lblNameHolder))
                 .addGap(18, 18, 18)
-                .addComponent(jblText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTest)
-                .addContainerGap(449, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addContainerGap(438, Short.MAX_VALUE))
         );
 
         pack();
@@ -121,7 +151,17 @@ public class AccountFrame extends javax.swing.JFrame {
                         
                         Account a = Account.deserialize(contentt);
                         
-                        lblTest.setText(a.getAccountNumber());
+                        // esto muestra "cuenta de nomina" al inicio
+                        lblProduct.setText(a.getProduct());
+                        
+                        // este ya no es una prueba, muestra el numero de cuenta
+                        lblAccountNumber.setText(a.getAccountNumber());
+                        
+                        // esto muestra la moneda a manejar en la cuenta
+                        lblCurrency.setText(a.getCurrency());
+                        
+                        
+                        // ELIMINE ALGUIEN ESTO DEL DESIGN :00
                         lblNameHolder.setText(a.getAccountHolder().getName());
                         
                     } catch (IOException ex) {
@@ -168,9 +208,12 @@ public class AccountFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFile;
-    private javax.swing.JLabel jblText;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblAccountNumber;
+    private javax.swing.JLabel lblCurrency;
     private javax.swing.JLabel lblNameHolder;
-    private javax.swing.JLabel lblTest;
+    private javax.swing.JLabel lblProduct;
     private javax.swing.JLabel lblTitile;
     // End of variables declaration//GEN-END:variables
 }

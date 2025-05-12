@@ -102,3 +102,23 @@ public class Account
     } return a;  
     }
 }
+/*
+=== Titulo
+"product":"Cuenta de nómina",
+
+=== Detalles de la cuenta
+"account-number":"69740214082"
+"currency":"MXN"
+
+=== Titular
+"name":"Yolanda Saldívar"
+"code":"36859941"
+"taxpayer-id":"SAY690205ER9"
+
+=== Direccion del titular
+"address":"Calle Miguel Hidalgo #52"
+"city":"Empalme, Sonora"
+"zip-code":"85400"
+
+=== Aqui iria la tabla con todas las transacciones :))
+*/
