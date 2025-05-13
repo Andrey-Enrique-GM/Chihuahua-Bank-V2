@@ -33,12 +33,14 @@ public class AccountFrame extends javax.swing.JFrame {
 
         btnFile = new javax.swing.JButton();
         lblAccountNumber = new javax.swing.JLabel();
-        lblTitile = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
         lblNameHolder = new javax.swing.JLabel();
         lblProduct = new javax.swing.JLabel();
         lblCurrency = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        lblCodeHolder = new javax.swing.JLabel();
+        lblTaxpayerIdHolder = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,12 +57,13 @@ public class AccountFrame extends javax.swing.JFrame {
         lblAccountNumber.setForeground(new java.awt.Color(204, 0, 51));
         lblAccountNumber.setText("02");
 
-        lblTitile.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        lblTitile.setForeground(new java.awt.Color(102, 0, 102));
-        lblTitile.setText("Chihuahua Bank");
+        lblTitle.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        lblTitle.setForeground(new java.awt.Color(102, 0, 102));
+        lblTitle.setText("Chihuahua Bank");
 
-        lblNameHolder.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblNameHolder.setText("Name:");
+        lblNameHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        lblNameHolder.setForeground(new java.awt.Color(0, 102, 204));
+        lblNameHolder.setText("04");
 
         lblProduct.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblProduct.setForeground(new java.awt.Color(0, 51, 255));
@@ -78,6 +81,14 @@ public class AccountFrame extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(51, 0, 204));
         jLabel2.setText("Account Owner ---");
 
+        lblCodeHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        lblCodeHolder.setForeground(new java.awt.Color(0, 102, 204));
+        lblCodeHolder.setText("05");
+
+        lblTaxpayerIdHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
+        lblTaxpayerIdHolder.setForeground(new java.awt.Color(0, 102, 204));
+        lblTaxpayerIdHolder.setText("06");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,48 +97,53 @@ public class AccountFrame extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTitile)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblNameHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 134, Short.MAX_VALUE))
-                            .addComponent(btnFile, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblTitle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnFile, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(49, 49, 49))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(65, 65, 65)
-                                        .addComponent(lblCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(lblAccountNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblNameHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblCodeHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(lblTaxpayerIdHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(186, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTitile)
+                    .addComponent(lblTitle)
                     .addComponent(btnFile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblProduct)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblAccountNumber)
-                        .addComponent(lblCurrency))
-                    .addComponent(lblNameHolder))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAccountNumber)
+                    .addComponent(lblCurrency))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addContainerGap(436, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNameHolder)
+                    .addComponent(lblCodeHolder)
+                    .addComponent(lblTaxpayerIdHolder))
+                .addContainerGap(409, Short.MAX_VALUE))
         );
 
         pack();
@@ -161,9 +177,14 @@ public class AccountFrame extends javax.swing.JFrame {
                         // esto muestra la moneda a manejar en la cuenta
                         lblCurrency.setText(a.getCurrency());
                         
-                        
-                        // ELIMINE ALGUIEN ESTO DEL DESIGN :00
+                        // esto muestra el nombre del propietario de la cuenta anexado posterior a "Name:"
                         lblNameHolder.setText("Name: " + a.getAccountHolder().getName());
+                        
+                        // esto muestra el code del propietario de la cuenta
+                        lblCodeHolder.setText(a.getAccountHolder().getCode());
+                        
+                        // esto muestra el taxpayer id del propietario de la cuenta
+                        lblTaxpayerIdHolder.setText(a.getAccountHolder().getTaxpayerId());
                         
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -212,9 +233,11 @@ public class AccountFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblAccountNumber;
+    private javax.swing.JLabel lblCodeHolder;
     private javax.swing.JLabel lblCurrency;
     private javax.swing.JLabel lblNameHolder;
     private javax.swing.JLabel lblProduct;
-    private javax.swing.JLabel lblTitile;
+    private javax.swing.JLabel lblTaxpayerIdHolder;
+    private javax.swing.JLabel lblTitle;
     // End of variables declaration//GEN-END:variables
 }
