@@ -3,6 +3,7 @@ package mx.itson.chihuahuabank.entities;
 
 // @authors: Andrey, 02, 03, 04
 
+import java.util.Date;
 import mx.itson.chihuahuabank.enums.TransactionType;
 
 
@@ -12,14 +13,14 @@ public class Transaction
     /**
      * @return the date
      */
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
     /**
      * @param date the date to set
      */
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -80,7 +81,9 @@ public class Transaction
     }
     
     // yyyy-MM-dd
-    private String date;
+    // private String date; **** tipo de dato incorrecto causaba error en la tabla
+    
+    private Date date;
     private String description;
     private String reference;
     private double amount;

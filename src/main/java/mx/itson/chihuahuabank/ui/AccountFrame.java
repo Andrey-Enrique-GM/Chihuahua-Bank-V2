@@ -149,7 +149,7 @@ public class AccountFrame extends javax.swing.JFrame {
                                             .addComponent(lblTaxpayerIdHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(lblCodeHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addGap(28, 28, 28)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(49, 49, 49))))
         );
         layout.setVerticalGroup(
@@ -230,11 +230,14 @@ public class AccountFrame extends javax.swing.JFrame {
                         DefaultTableModel model = (DefaultTableModel) tblTransactions.getModel();
                         model.setRowCount(0);
                         
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                        
+                       SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de 'MMMM' del 'yyyy");
+                        System.out.println(a.getTransactions());
                         for (Transaction t : a.getTransactions()){
                             model.addRow(new Object[] {
-                                dateFormat.format(t.getDate()),
+// surgio un error en esta declaracion                                
+//dateFormat.format(t.getDate()),
+                                
+                               dateFormat.format(t.getDate()),
                                 t.getReference(),
                                 t.getDescription(),
                                 t.getType(),
