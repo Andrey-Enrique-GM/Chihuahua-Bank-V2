@@ -10,8 +10,8 @@ public enum TransactionType
 {
     
     @SerializedName("1")
-    CARGO,
+    ABONO,
     @SerializedName("2")
-    ABONO
+    CARGO
     
 }

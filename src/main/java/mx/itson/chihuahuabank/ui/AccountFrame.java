@@ -10,9 +10,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.table.DefaultTableModel;
 import mx.itson.chihuahuabank.entities.Account;
 import mx.itson.chihuahuabank.entities.Transaction;
+import mx.itson.chihuahuabank.enums.TransactionType;
 
 // @authors: Andrey, 02, 03, 04
 
@@ -107,7 +110,7 @@ public class AccountFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date", "Reference", "Description", "Type", "Amount"
+                "Date", "Reference", "Description", "- Charge", "- Credit", "- Balance"
             }
         ));
         jScrollPane1.setViewportView(tblTransactions);
@@ -264,22 +267,43 @@ public class AccountFrame extends javax.swing.JFrame {
                         DefaultTableModel model = (DefaultTableModel) tblTransactions.getModel();
                         model.setRowCount(0);
                         
-                       SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de 'MMMM' del 'yyyy");
-                        System.out.println(a.getTransactions());
-                        for (Transaction t : a.getTransactions()){
-                            model.addRow(new Object[] {
-// surgio un error en esta declaracion                                
-//dateFormat.format(t.getDate()),
-                                
-                               dateFormat.format(t.getDate()),
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de 'MMMM' del 'yyyy");
+                        
+                        // obtener saldo inicial desde la primera transaccion
+                        double balance = a.getTransactions().get(0).getAmount();
+                        
+                        Collections.sort(a.getTransactions(), Comparator.comparing(Transaction::getDate));
+
+                        for (int i = 0; i < a.getTransactions().size(); i++) {
+                            Transaction t = a.getTransactions().get(i);
+
+                            String formattedDate = (t.getDate() != null) ? dateFormat.format(t.getDate()) : "Fecha no disponible";
+
+                            String charge = "";
+                            String credit = "";
+
+                            // Si esta en la primera transaccion y es un abono, lo muestra en la columna de "Abono", pero no lo suma de nuevo al saldo, porque ya lo usa como balance inicial
+                            if (i == 0 && t.getType() == TransactionType.ABONO) {
+                                // Ya se consideró el abono inicial
+                                credit = String.valueOf(t.getAmount());
+                            } else {
+                                if (t.getType() == TransactionType.CARGO) {
+                                    charge = String.valueOf(t.getAmount());
+                                    balance -= t.getAmount();
+                                } else if (t.getType() == TransactionType.ABONO) {
+                                    credit = String.valueOf(t.getAmount());
+                                    balance += t.getAmount();
+                                }
+                            }
+                                model.addRow(new Object[] {
+                                formattedDate,
                                 t.getReference(),
                                 t.getDescription(),
-                                t.getType(),
-                                t.getAmount()
-                                
+                                charge,
+                                credit,
+                                String.format("%.2f", balance) // muestra el saldo con 2 decimales
                             });
-                        }
-                        
+                        }   
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
