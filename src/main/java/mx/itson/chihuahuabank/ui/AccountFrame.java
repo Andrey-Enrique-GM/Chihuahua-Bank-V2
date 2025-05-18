@@ -5,6 +5,7 @@
 package mx.itson.chihuahuabank.ui;
 
 import java.awt.FileDialog;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -12,8 +13,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mx.itson.chihuahuabank.entities.Account;
+import mx.itson.chihuahuabank.entities.InterestRateManager;
 import mx.itson.chihuahuabank.entities.Transaction;
 import mx.itson.chihuahuabank.enums.TransactionType;
 
@@ -53,6 +56,9 @@ public class AccountFrame extends javax.swing.JFrame {
         lblAddressHolder = new javax.swing.JLabel();
         lblCityHolder = new javax.swing.JLabel();
         lblZipCodeHolder = new javax.swing.JLabel();
+        btnSetInterestRate = new javax.swing.JButton();
+        lblInterestRate = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,7 +116,7 @@ public class AccountFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date", "Reference", "Description", "- Charge", "- Credit", "- Balance"
+                "Date", "Reference", "Description", "- Charge", "+ Deposit", "* Balance"
             }
         ));
         jScrollPane1.setViewportView(tblTransactions);
@@ -127,54 +133,76 @@ public class AccountFrame extends javax.swing.JFrame {
         lblZipCodeHolder.setForeground(new java.awt.Color(204, 0, 204));
         lblZipCodeHolder.setText("09");
 
+        btnSetInterestRate.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnSetInterestRate.setForeground(new java.awt.Color(0, 153, 153));
+        btnSetInterestRate.setText("Set Interest Rate");
+        btnSetInterestRate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSetInterestRateActionPerformed(evt);
+            }
+        });
+
+        lblInterestRate.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblInterestRate.setForeground(new java.awt.Color(0, 204, 204));
+        lblInterestRate.setText("...");
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 2, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 102, 204));
+        jLabel4.setText("Transactions:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(btnFile, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
+                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnFile, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(61, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addGap(78, 78, 78))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblAccountNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGap(18, 18, 18)))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(lblNameHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jLabel1)
+                                        .addGap(78, 78, 78))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblTaxpayerIdHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(lblCodeHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(28, 28, 28)
+                                        .addComponent(lblAccountNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(18, 18, 18)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblZipCodeHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblCityHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(lblAddressHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(14, 14, 14)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jLabel2)
+                                    .addComponent(lblNameHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTaxpayerIdHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblCodeHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblZipCodeHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblCityHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblAddressHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSetInterestRate)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -209,9 +237,14 @@ public class AccountFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTaxpayerIdHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblZipCodeHolder))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSetInterestRate)
+                    .addComponent(lblInterestRate)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -269,41 +302,38 @@ public class AccountFrame extends javax.swing.JFrame {
                         
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de 'MMMM' del 'yyyy");
                         
-                        // obtener saldo inicial desde la primera transaccion
-                        double balance = a.getTransactions().get(0).getAmount();
-                        
                         Collections.sort(a.getTransactions(), Comparator.comparing(Transaction::getDate));
-
+                        
+                        // saldo inicial en 0
+                        double balance = 0;
+                        
                         for (int i = 0; i < a.getTransactions().size(); i++) {
                             Transaction t = a.getTransactions().get(i);
 
                             String formattedDate = (t.getDate() != null) ? dateFormat.format(t.getDate()) : "Fecha no disponible";
 
                             String charge = "";
-                            String credit = "";
+                            String deposit = "";
 
-                            // Si esta en la primera transaccion y es un abono, lo muestra en la columna de "Abono", pero no lo suma de nuevo al saldo, porque ya lo usa como balance inicial
-                            if (i == 0 && t.getType() == TransactionType.ABONO) {
-                                // Ya se consideró el abono inicial
-                                credit = String.valueOf(t.getAmount());
-                            } else {
-                                if (t.getType() == TransactionType.CARGO) {
-                                    charge = String.valueOf(t.getAmount());
-                                    balance -= t.getAmount();
-                                } else if (t.getType() == TransactionType.ABONO) {
-                                    credit = String.valueOf(t.getAmount());
-                                    balance += t.getAmount();
-                                }
+                            // 
+                            if (t.getType() == TransactionType.CARGO) {
+                                charge = String.valueOf(t.getAmount());
+                                balance -= t.getAmount();   // restar cargos
+                            } else if (t.getType() == TransactionType.ABONO) {
+                                // Ya se considero el abono inicial
+                                deposit = String.valueOf(t.getAmount());
+                                balance += t.getAmount();   // sumar abonos
                             }
+                            
                                 model.addRow(new Object[] {
                                 formattedDate,
                                 t.getReference(),
                                 t.getDescription(),
                                 charge,
-                                credit,
+                                deposit,
                                 String.format("%.2f", balance) // muestra el saldo con 2 decimales
                             });
-                        }   
+                        }
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
@@ -311,6 +341,14 @@ public class AccountFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnFileActionPerformed
 
+    private void btnSetInterestRateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetInterestRateActionPerformed
+        InterestRateManager rateManager = new InterestRateManager();
+        for (ActionListener al : btnSetInterestRate.getActionListeners()) {
+            btnSetInterestRate.removeActionListener(al);
+        }
+        btnSetInterestRate.addActionListener(e -> rateManager.promptAndSetInterestRate(lblInterestRate));
+    }//GEN-LAST:event_btnSetInterestRateActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -348,15 +386,18 @@ public class AccountFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFile;
+    private javax.swing.JButton btnSetInterestRate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAccountNumber;
     private javax.swing.JLabel lblAddressHolder;
     private javax.swing.JLabel lblCityHolder;
     private javax.swing.JLabel lblCodeHolder;
     private javax.swing.JLabel lblCurrency;
+    private javax.swing.JLabel lblInterestRate;
     private javax.swing.JLabel lblNameHolder;
     private javax.swing.JLabel lblProduct;
     private javax.swing.JLabel lblTaxpayerIdHolder;
