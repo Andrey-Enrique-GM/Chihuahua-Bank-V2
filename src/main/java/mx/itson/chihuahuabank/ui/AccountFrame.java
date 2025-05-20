@@ -10,16 +10,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Comparator;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mx.itson.chihuahuabank.entities.Account;
 import mx.itson.chihuahuabank.entities.InterestRateManager;
-import mx.itson.chihuahuabank.entities.Transaction;
 import mx.itson.chihuahuabank.entities.TransactionTableLoader;
-import mx.itson.chihuahuabank.enums.TransactionType;
 
 // @authors: Andrey, 02, 03, 04
 
@@ -74,7 +68,7 @@ public class AccountFrame extends javax.swing.JFrame {
 
         lblAccountNumber.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblAccountNumber.setForeground(new java.awt.Color(204, 0, 51));
-        lblAccountNumber.setText("02");
+        lblAccountNumber.setText("...");
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(102, 0, 102));
@@ -82,15 +76,15 @@ public class AccountFrame extends javax.swing.JFrame {
 
         lblNameHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblNameHolder.setForeground(new java.awt.Color(0, 102, 204));
-        lblNameHolder.setText("04");
+        lblNameHolder.setText("...");
 
         lblProduct.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblProduct.setForeground(new java.awt.Color(0, 51, 255));
-        lblProduct.setText("01");
+        lblProduct.setText("...");
 
         lblCurrency.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblCurrency.setForeground(new java.awt.Color(204, 0, 51));
-        lblCurrency.setText("03");
+        lblCurrency.setText("...");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 17)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 0, 0));
@@ -102,11 +96,11 @@ public class AccountFrame extends javax.swing.JFrame {
 
         lblCodeHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblCodeHolder.setForeground(new java.awt.Color(0, 102, 204));
-        lblCodeHolder.setText("05");
+        lblCodeHolder.setText("...");
 
         lblTaxpayerIdHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblTaxpayerIdHolder.setForeground(new java.awt.Color(0, 102, 204));
-        lblTaxpayerIdHolder.setText("06");
+        lblTaxpayerIdHolder.setText("...");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 17)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(153, 0, 204));
@@ -124,15 +118,15 @@ public class AccountFrame extends javax.swing.JFrame {
 
         lblAddressHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblAddressHolder.setForeground(new java.awt.Color(204, 0, 204));
-        lblAddressHolder.setText("07");
+        lblAddressHolder.setText("...");
 
         lblCityHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblCityHolder.setForeground(new java.awt.Color(204, 0, 204));
-        lblCityHolder.setText("08");
+        lblCityHolder.setText("...");
 
         lblZipCodeHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblZipCodeHolder.setForeground(new java.awt.Color(204, 0, 204));
-        lblZipCodeHolder.setText("09");
+        lblZipCodeHolder.setText("...");
 
         btnSetInterestRate.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnSetInterestRate.setForeground(new java.awt.Color(0, 153, 153));
@@ -283,7 +277,7 @@ public class AccountFrame extends javax.swing.JFrame {
                         lblNameHolder.setText("Name: " + a.getAccountHolder().getName());
                         
                         // esto muestra el code del propietario de la cuenta
-                        lblCodeHolder.setText("IDK: " + a.getAccountHolder().getCode());
+                        lblCodeHolder.setText("ID: " + a.getAccountHolder().getCode());
                         
                         // esto muestra el taxpayer id del propietario de la cuenta. "TaxpayerID"
                         lblTaxpayerIdHolder.setText("TID: " + a.getAccountHolder().getTaxpayerId());
@@ -314,7 +308,7 @@ public class AccountFrame extends javax.swing.JFrame {
         }
         btnSetInterestRate.addActionListener(e -> rateManager.promptAndSetInterestRate(lblInterestRate));
     }//GEN-LAST:event_btnSetInterestRateActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
