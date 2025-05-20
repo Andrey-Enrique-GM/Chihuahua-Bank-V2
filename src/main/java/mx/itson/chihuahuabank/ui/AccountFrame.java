@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import mx.itson.chihuahuabank.entities.Account;
 import mx.itson.chihuahuabank.entities.InterestRateManager;
 import mx.itson.chihuahuabank.entities.Transaction;
+import mx.itson.chihuahuabank.entities.TransactionTableLoader;
 import mx.itson.chihuahuabank.enums.TransactionType;
 
 // @authors: Andrey, 02, 03, 04
@@ -296,44 +297,9 @@ public class AccountFrame extends javax.swing.JFrame {
                         // esto muestra el zip-code del propietario
                         lblZipCodeHolder.setText("ZIP: " + a.getAccountHolder().getZipCode());
                         
-                        
+                        // Se llama al metodo para poblar la jtable con transacciones ordenadas
                         DefaultTableModel model = (DefaultTableModel) tblTransactions.getModel();
-                        model.setRowCount(0);
-                        
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de 'MMMM' del 'yyyy");
-                        
-                        Collections.sort(a.getTransactions(), Comparator.comparing(Transaction::getDate));
-                        
-                        // saldo inicial en 0
-                        double balance = 0;
-                        
-                        for (int i = 0; i < a.getTransactions().size(); i++) {
-                            Transaction t = a.getTransactions().get(i);
-
-                            String formattedDate = (t.getDate() != null) ? dateFormat.format(t.getDate()) : "Fecha no disponible";
-
-                            String charge = "";
-                            String deposit = "";
-
-                            // 
-                            if (t.getType() == TransactionType.CARGO) {
-                                charge = String.valueOf(t.getAmount());
-                                balance -= t.getAmount();   // restar cargos
-                            } else if (t.getType() == TransactionType.ABONO) {
-                                // Ya se considero el abono inicial
-                                deposit = String.valueOf(t.getAmount());
-                                balance += t.getAmount();   // sumar abonos
-                            }
-                            
-                                model.addRow(new Object[] {
-                                formattedDate,
-                                t.getReference(),
-                                t.getDescription(),
-                                charge,
-                                deposit,
-                                String.format("%.2f", balance) // muestra el saldo con 2 decimales
-                            });
-                        }
+                        TransactionTableLoader.loadTransactionsIntoTable(model, a.getTransactions());
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
