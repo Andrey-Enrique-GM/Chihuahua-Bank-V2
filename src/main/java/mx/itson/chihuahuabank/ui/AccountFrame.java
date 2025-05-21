@@ -5,24 +5,28 @@
 package mx.itson.chihuahuabank.ui;
 
 import java.awt.FileDialog;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mx.itson.chihuahuabank.entities.Account;
+import mx.itson.chihuahuabank.entities.InterestCalculator;
 import mx.itson.chihuahuabank.entities.InterestRateManager;
 import mx.itson.chihuahuabank.entities.Transaction;
+import mx.itson.chihuahuabank.entities.TransactionTableLoader;
 import mx.itson.chihuahuabank.enums.TransactionType;
 
 // @authors: Andrey, 02, 03, 04
 
 public class AccountFrame extends javax.swing.JFrame {
+
+    // se declara a, la account
+    private Account a;
 
     /**
      * Creates new form AccountFrame
@@ -56,9 +60,9 @@ public class AccountFrame extends javax.swing.JFrame {
         lblAddressHolder = new javax.swing.JLabel();
         lblCityHolder = new javax.swing.JLabel();
         lblZipCodeHolder = new javax.swing.JLabel();
-        btnSetInterestRate = new javax.swing.JButton();
-        lblInterestRate = new javax.swing.JLabel();
+        btnApplyInterestRate = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        txtInterestRate = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,7 +77,7 @@ public class AccountFrame extends javax.swing.JFrame {
 
         lblAccountNumber.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblAccountNumber.setForeground(new java.awt.Color(204, 0, 51));
-        lblAccountNumber.setText("02");
+        lblAccountNumber.setText("...");
 
         lblTitle.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(102, 0, 102));
@@ -81,15 +85,15 @@ public class AccountFrame extends javax.swing.JFrame {
 
         lblNameHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblNameHolder.setForeground(new java.awt.Color(0, 102, 204));
-        lblNameHolder.setText("04");
+        lblNameHolder.setText("...");
 
         lblProduct.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblProduct.setForeground(new java.awt.Color(0, 51, 255));
-        lblProduct.setText("01");
+        lblProduct.setText("...");
 
         lblCurrency.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblCurrency.setForeground(new java.awt.Color(204, 0, 51));
-        lblCurrency.setText("03");
+        lblCurrency.setText("...");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 17)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 0, 0));
@@ -101,11 +105,11 @@ public class AccountFrame extends javax.swing.JFrame {
 
         lblCodeHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblCodeHolder.setForeground(new java.awt.Color(0, 102, 204));
-        lblCodeHolder.setText("05");
+        lblCodeHolder.setText("...");
 
         lblTaxpayerIdHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblTaxpayerIdHolder.setForeground(new java.awt.Color(0, 102, 204));
-        lblTaxpayerIdHolder.setText("06");
+        lblTaxpayerIdHolder.setText("...");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 17)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(153, 0, 204));
@@ -123,32 +127,30 @@ public class AccountFrame extends javax.swing.JFrame {
 
         lblAddressHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblAddressHolder.setForeground(new java.awt.Color(204, 0, 204));
-        lblAddressHolder.setText("07");
+        lblAddressHolder.setText("...");
 
         lblCityHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblCityHolder.setForeground(new java.awt.Color(204, 0, 204));
-        lblCityHolder.setText("08");
+        lblCityHolder.setText("...");
 
         lblZipCodeHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         lblZipCodeHolder.setForeground(new java.awt.Color(204, 0, 204));
-        lblZipCodeHolder.setText("09");
+        lblZipCodeHolder.setText("...");
 
-        btnSetInterestRate.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnSetInterestRate.setForeground(new java.awt.Color(0, 153, 153));
-        btnSetInterestRate.setText("Set Interest Rate");
-        btnSetInterestRate.addActionListener(new java.awt.event.ActionListener() {
+        btnApplyInterestRate.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnApplyInterestRate.setForeground(new java.awt.Color(0, 153, 153));
+        btnApplyInterestRate.setText("Apply Interest Rate");
+        btnApplyInterestRate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSetInterestRateActionPerformed(evt);
+                btnApplyInterestRateActionPerformed(evt);
             }
         });
-
-        lblInterestRate.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lblInterestRate.setForeground(new java.awt.Color(0, 204, 204));
-        lblInterestRate.setText("...");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 2, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 204));
         jLabel4.setText("Transactions:");
+
+        txtInterestRate.setText("Set Interest Rate...");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -199,9 +201,9 @@ public class AccountFrame extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSetInterestRate)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnApplyInterestRate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -239,9 +241,9 @@ public class AccountFrame extends javax.swing.JFrame {
                     .addComponent(lblZipCodeHolder))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSetInterestRate)
-                    .addComponent(lblInterestRate)
-                    .addComponent(jLabel4))
+                    .addComponent(btnApplyInterestRate)
+                    .addComponent(jLabel4)
+                    .addComponent(txtInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -267,7 +269,7 @@ public class AccountFrame extends javax.swing.JFrame {
                         }
                         String contentt = content.toString();  
                         
-                        Account a = Account.deserialize(contentt);
+                        a = Account.deserialize(contentt);
                         
                         // esto muestra "cuenta de nomina" al inicio
                         lblProduct.setText(a.getProduct());
@@ -282,7 +284,7 @@ public class AccountFrame extends javax.swing.JFrame {
                         lblNameHolder.setText("Name: " + a.getAccountHolder().getName());
                         
                         // esto muestra el code del propietario de la cuenta
-                        lblCodeHolder.setText("IDK: " + a.getAccountHolder().getCode());
+                        lblCodeHolder.setText("ID: " + a.getAccountHolder().getCode());
                         
                         // esto muestra el taxpayer id del propietario de la cuenta. "TaxpayerID"
                         lblTaxpayerIdHolder.setText("TID: " + a.getAccountHolder().getTaxpayerId());
@@ -297,44 +299,10 @@ public class AccountFrame extends javax.swing.JFrame {
                         lblZipCodeHolder.setText("ZIP: " + a.getAccountHolder().getZipCode());
                         
                         
+                        // Se llama al metodo para poblar la jtable con transacciones ordenadas
                         DefaultTableModel model = (DefaultTableModel) tblTransactions.getModel();
-                        model.setRowCount(0);
                         
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd 'de 'MMMM' del 'yyyy");
-                        // @miguel, ordena el json por fecha
-                        
-                        Collections.sort(a.getTransactions(), (Transaction b, Transaction c)-> b.getDate().compareTo(c.getDate()) );
-                        
-                        // saldo inicial en 0
-                        double balance = 0;
-                        
-                        for (int i = 0; i < a.getTransactions().size(); i++) {
-                            Transaction t = a.getTransactions().get(i);
-
-                            String formattedDate = (t.getDate() != null) ? dateFormat.format(t.getDate()) : "Fecha no disponible";
-
-                            String charge = "";
-                            String deposit = "";
-
-                            // 
-                            if (t.getType() == TransactionType.CARGO) {
-                                charge = String.valueOf(t.getAmount());
-                                balance -= t.getAmount();   // restar cargos
-                            } else if (t.getType() == TransactionType.ABONO) {
-                                // Ya se considero el abono inicial
-                                deposit = String.valueOf(t.getAmount());
-                                balance += t.getAmount();   // sumar abonos
-                            }
-                            
-                                model.addRow(new Object[] {
-                                formattedDate,
-                                t.getReference(),
-                                t.getDescription(),
-                                charge,
-                                deposit,
-                                String.format("%.2f", balance) // muestra el saldo con 2 decimales
-                            });
-                        }
+                        TransactionTableLoader.loadTransactionsIntoTable(model, a.getTransactions());
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
@@ -342,13 +310,55 @@ public class AccountFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnFileActionPerformed
 
-    private void btnSetInterestRateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetInterestRateActionPerformed
-        InterestRateManager rateManager = new InterestRateManager();
-        for (ActionListener al : btnSetInterestRate.getActionListeners()) {
-            btnSetInterestRate.removeActionListener(al);
+    private InterestRateManager rateManager = new InterestRateManager();
+    
+    private void btnApplyInterestRateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyInterestRateActionPerformed
+        try{
+        // Obtener y guardar la tasa ingresada
+        double rate = Double.parseDouble(txtInterestRate.getText());
+        rateManager.setDailyInterestRate(rate);
+
+        // Calcular nuevas transacciones (con dias faltantes y abonos de interes)
+        List<Transaction> updatedTransactions = InterestCalculator.generateTransactionsWithInterest(
+            a.getTransactions(), rate
+        );
+
+        // Obtener el modelo de la tabla y limpiarlo
+        DefaultTableModel model = (DefaultTableModel) tblTransactions.getModel();
+        model.setRowCount(0);
+
+        // Preparar formato y balance inicial
+        SimpleDateFormat sdf = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
+        double balance = 0;
+
+        // Llenar la tabla con las transacciones
+        for (Transaction t : updatedTransactions) {
+            String charge = "", deposit = "";
+
+            if (t.getType() == TransactionType.CARGO) {
+                charge = String.format("%.2f", t.getAmount());
+                balance -= t.getAmount();
+            } else if (t.getType() == TransactionType.ABONO) {
+                deposit = String.format("%.2f", t.getAmount());
+                balance += t.getAmount();
+            }
+
+            model.addRow(new Object[]{
+                sdf.format(t.getDate()),
+                t.getReference(),
+                t.getDescription(),
+                charge,
+                deposit,
+                String.format("%.2f", balance)
+            });
         }
-        btnSetInterestRate.addActionListener(e -> rateManager.promptAndSetInterestRate(lblInterestRate));
-    }//GEN-LAST:event_btnSetInterestRateActionPerformed
+        
+        JOptionPane.showMessageDialog(this, "Tasa aplicada correctamente: " + rate);
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingresa una tasa valida (ejemplo: 0.0004).", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnApplyInterestRateActionPerformed
     
     /**
      * @param args the command line arguments
@@ -386,8 +396,8 @@ public class AccountFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnApplyInterestRate;
     private javax.swing.JButton btnFile;
-    private javax.swing.JButton btnSetInterestRate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -398,12 +408,12 @@ public class AccountFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblCityHolder;
     private javax.swing.JLabel lblCodeHolder;
     private javax.swing.JLabel lblCurrency;
-    private javax.swing.JLabel lblInterestRate;
     private javax.swing.JLabel lblNameHolder;
     private javax.swing.JLabel lblProduct;
     private javax.swing.JLabel lblTaxpayerIdHolder;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblZipCodeHolder;
     private javax.swing.JTable tblTransactions;
+    private javax.swing.JTextField txtInterestRate;
     // End of variables declaration//GEN-END:variables
 }
