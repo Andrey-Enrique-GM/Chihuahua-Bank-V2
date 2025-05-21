@@ -80,9 +80,6 @@ public class Transaction
         this.type = type;
     }
     
-    // yyyy-MM-dd
-    // private String date; **** tipo de dato incorrecto causaba error en la tabla
-    
     private Date date;
     private String description;
     private String reference;

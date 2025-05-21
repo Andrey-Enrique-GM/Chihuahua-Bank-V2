@@ -89,9 +89,13 @@ public class Account
     private AccountHolder accountHolder;
     private List<Transaction> transactions;
     
-    /*
-    
-    */
+    /**
+     * Deserializes a JSON string into an {@link Account} object.
+     * 
+     * @param json the JSON string representing an Account object.
+     * @return an {@code Account} object populated with data from the JSON string;
+     *         returns an empty {@code Account} instance if deserialization fails.
+     */
     public static Account deserialize(String json){
     Account a = new Account();
     try{
@@ -101,30 +105,5 @@ public class Account
         System.err.println("Error: " + ex.getMessage());
     } return a;  
     }
-    public static Account interes(double porcentaje){
-        //TODO logica para calcular interes diario
-        return null;
-        //TODO logica para calcular interes diario
-       
-    }
+    
 }
-/*
-=== Titulo
-"product":"Cuenta de nómina",
-
-=== Detalles de la cuenta
-"account-number":"69740214082"
-"currency":"MXN"
-
-=== Titular
-"name":"Yolanda Saldívar"
-"code":"36859941"
-"taxpayer-id":"SAY690205ER9"
-
-=== Direccion del titular
-"address":"Calle Miguel Hidalgo #52"
-"city":"Empalme, Sonora"
-"zip-code":"85400"
-
-=== Aqui iria la tabla con todas las transacciones :))
-*/

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package mx.itson.chihuahuabank.entities;
 
 import java.util.ArrayList;
@@ -11,16 +8,15 @@ import java.util.Date;
 import java.util.List;
 import mx.itson.chihuahuabank.enums.TransactionType;
 
-/**
- *
- * @author Andrey
- */
+// @author Andrey
+
 public class InterestCalculator {
     
-    public static List<Transaction> generateTransactionsWithInterest(List<Transaction> original, double rate) {
+    public static List<Transaction> generateTransactionsWithInterest(List<Transaction> original, double rate)
+    {
         List<Transaction> result = new ArrayList<>();
 
-        // Ordenar por fecha
+        // Sorts the list of transactions by date in ascending order (earliest to latest)
         original.sort(Comparator.comparing(Transaction::getDate));
 
         double currentBalance = 0;
@@ -29,7 +25,10 @@ public class InterestCalculator {
             Transaction current = original.get(i);
             Date currentDate = current.getDate();
 
-            // Insertar dias faltantes desde la ultima fecha
+            /*
+            If not the first transaction, generate daily interest transactions
+            between the previous and current transaction dates.
+            */
             if (i > 0) {
                 Date previousDate = original.get(i - 1).getDate();
                 Calendar cal = Calendar.getInstance();
@@ -41,27 +40,30 @@ public class InterestCalculator {
 
                     if (!nextDay.before(currentDate)) break;
 
-                    // Crear nueva transaccion de interes
+                    // Calculates the daily interest based on the current balance and interest rate
                     double interest = currentBalance * rate;
 
                     Transaction interestTransaction = new Transaction();
                     interestTransaction.setDate(nextDay);
                     interestTransaction.setReference("N/A");
-                    interestTransaction.setDescription("Crecimiento diario");
+                    interestTransaction.setDescription("Daily growth");
                     interestTransaction.setAmount(interest);
                     interestTransaction.setType(TransactionType.ABONO);
 
                     result.add(interestTransaction);
 
-                    // Actualizar balance simulado
+                    // Updates the current balance by adding the calculated daily interest
                     currentBalance += interest;
                 }
             }
 
-            // Agregar transaccion original
+            // Adds the current transaction to the result list
             result.add(current);
 
-            // Actualizar balance con la original
+            /*
+            Updates the current balance by adding or subtracting the transaction
+            amount depending on its type (credit or debit).
+            */
             if (current.getType() == TransactionType.ABONO) {
                 currentBalance += current.getAmount();
             } else {

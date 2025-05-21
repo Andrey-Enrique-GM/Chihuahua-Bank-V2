@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package mx.itson.chihuahuabank.ui;
 
 import java.awt.FileDialog;
@@ -11,7 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import mx.itson.chihuahuabank.entities.Account;
@@ -25,11 +21,11 @@ import mx.itson.chihuahuabank.enums.TransactionType;
 
 public class AccountFrame extends javax.swing.JFrame {
 
-    // se declara a, la account
+    // Represents the main account object containing all data from the JSON
     private Account a;
 
     /**
-     * Creates new form AccountFrame
+     * Creates new form, AccountFrame
      */
     public AccountFrame() {
         initComponents();
@@ -79,8 +75,8 @@ public class AccountFrame extends javax.swing.JFrame {
         lblAccountNumber.setForeground(new java.awt.Color(204, 0, 51));
         lblAccountNumber.setText("...");
 
-        lblTitle.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        lblTitle.setForeground(new java.awt.Color(102, 0, 102));
+        lblTitle.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        lblTitle.setForeground(new java.awt.Color(153, 0, 153));
         lblTitle.setText("Chihuahua Bank");
 
         lblNameHolder.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
@@ -150,8 +146,6 @@ public class AccountFrame extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 102, 204));
         jLabel4.setText("Transactions:");
 
-        txtInterestRate.setText("Set Interest Rate...");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -197,14 +191,14 @@ public class AccountFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1015, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnApplyInterestRate)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(txtInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 589, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -246,118 +240,143 @@ public class AccountFrame extends javax.swing.JFrame {
                     .addComponent(txtInterestRate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+    * Handles the action event triggered when the "File" button is clicked.
+    *
+    * This method opens a file selection dialog, reads the selected JSON file,
+    * deserializes it into an {@link Account} object, and updates the UI labels
+    * and transaction table with the account's data.
+    *
+    * @param evt the action event triggered by the button click
+    */
     private void btnFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFileActionPerformed
-            FileDialog fileDialog = new FileDialog(this, "Select File", FileDialog.LOAD);
-                fileDialog.setVisible(true);
+        // Open a file dialog for selecting a file to load    
+        FileDialog fileDialog = new FileDialog(this, "Select File", FileDialog.LOAD);
+        fileDialog.setVisible(true);
 
-                String directory = fileDialog.getDirectory();
-                String filename = fileDialog.getFile();
+        String directory = fileDialog.getDirectory();
+        String filename = fileDialog.getFile();
 
-                if (filename != null) {
-                    File selectedFile = new File(directory, filename);
-                    try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
-                        StringBuilder content = new StringBuilder();
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            content.append(line).append("\n");
-                        }
-                        String contentt = content.toString();  
-                        
-                        a = Account.deserialize(contentt);
-                        
-                        // esto muestra "cuenta de nomina" al inicio
-                        lblProduct.setText(a.getProduct());
-                        
-                        // este ya no es una prueba, muestra el numero de cuenta
-                        lblAccountNumber.setText("Account #: " + a.getAccountNumber());
-                        
-                        // esto muestra la moneda a manejar en la cuenta
-                        lblCurrency.setText("Currency: " + a.getCurrency());
-                        
-                        // esto muestra el nombre del propietario de la cuenta anexado posterior a "Name:"
-                        lblNameHolder.setText("Name: " + a.getAccountHolder().getName());
-                        
-                        // esto muestra el code del propietario de la cuenta
-                        lblCodeHolder.setText("ID: " + a.getAccountHolder().getCode());
-                        
-                        // esto muestra el taxpayer id del propietario de la cuenta. "TaxpayerID"
-                        lblTaxpayerIdHolder.setText("TID: " + a.getAccountHolder().getTaxpayerId());
-                        
-                        // esto muestra la address del propietario
-                        lblAddressHolder.setText(a.getAccountHolder().getAddress());
-                        
-                        // esto muestra la city del propietario
-                        lblCityHolder.setText(a.getAccountHolder().getCity());
-                        
-                        // esto muestra el zip-code del propietario
-                        lblZipCodeHolder.setText("ZIP: " + a.getAccountHolder().getZipCode());
-                        
-                        
-                        // Se llama al metodo para poblar la jtable con transacciones ordenadas
-                        DefaultTableModel model = (DefaultTableModel) tblTransactions.getModel();
-                        
-                        TransactionTableLoader.loadTransactionsIntoTable(model, a.getTransactions());
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
+        if (filename != null) {
+            File selectedFile = new File(directory, filename);
+            try (BufferedReader reader = new BufferedReader(new FileReader(selectedFile))) {
+                // Read the contents of the selected file
+                StringBuilder content = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    content.append(line).append("\n");
                 }
-        
+                String contentt = content.toString();  
+                       
+                // Deserialize the JSON content into an Account object
+                a = Account.deserialize(contentt);
+                        
+                // Update UI labels with account data ===
+
+                // Displays the product name
+                lblProduct.setText(a.getProduct());
+                        
+                // Displays the account number
+                lblAccountNumber.setText("Account #: " + a.getAccountNumber());
+                        
+                // Displays the currency type of the account
+                lblCurrency.setText("Currency: " + a.getCurrency());
+                        
+                // Displays the account holder's name
+                lblNameHolder.setText("Name: " + a.getAccountHolder().getName());
+                        
+                // Displays the account holder's ID code
+                lblCodeHolder.setText("ID: " + a.getAccountHolder().getCode());
+                        
+                // Displays the account holder's taxpayer ID
+                lblTaxpayerIdHolder.setText("TID: " + a.getAccountHolder().getTaxpayerId());
+                        
+                // Displays the account holder's address
+                lblAddressHolder.setText(a.getAccountHolder().getAddress());
+                        
+                // Displays the account holder's city
+                lblCityHolder.setText(a.getAccountHolder().getCity());
+                        
+                // Displays the account holder's ZIP code
+                lblZipCodeHolder.setText("ZIP: " + a.getAccountHolder().getZipCode());
+                            
+                // Load and display the list of transactions in the table
+                DefaultTableModel model = (DefaultTableModel) tblTransactions.getModel();
+                TransactionTableLoader.loadTransactionsIntoTable(model, a.getTransactions());
+                
+            } catch (IOException ex) {
+                // Print the stack trace if an error occurs while reading the file
+                ex.printStackTrace();
+            }
+        }   
     }//GEN-LAST:event_btnFileActionPerformed
 
+    // Manages the logic for applying and retrieving the daily interest rate
     private InterestRateManager rateManager = new InterestRateManager();
     
+    /**
+    * Handles the action event triggered when the "Apply Interest Rate" button is clicked.
+    * 
+    * This method retrieves the interest rate entered by the user, applies it to the transaction list
+    * by generating new interest transactions for missing days, updates the transaction table, and displays a confirmation.
+    *
+    * @param evt the action event triggered by the button click
+    */
     private void btnApplyInterestRateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApplyInterestRateActionPerformed
         try{
-        // Obtener y guardar la tasa ingresada
-        double rate = Double.parseDouble(txtInterestRate.getText());
-        rateManager.setDailyInterestRate(rate);
+            // Retrieve and save the entered interest rate
+            double rate = Double.parseDouble(txtInterestRate.getText());
+            rateManager.setDailyInterestRate(rate);
 
-        // Calcular nuevas transacciones (con dias faltantes y abonos de interes)
-        List<Transaction> updatedTransactions = InterestCalculator.generateTransactionsWithInterest(
-            a.getTransactions(), rate
-        );
+            // Generate a new list of transactions including interest for missing days
+            List<Transaction> updatedTransactions = InterestCalculator.generateTransactionsWithInterest(
+                a.getTransactions(), rate
+            );
 
-        // Obtener el modelo de la tabla y limpiarlo
-        DefaultTableModel model = (DefaultTableModel) tblTransactions.getModel();
-        model.setRowCount(0);
+            // Get the table model and clear its current contents
+            DefaultTableModel model = (DefaultTableModel) tblTransactions.getModel();
+            model.setRowCount(0);
 
-        // Preparar formato y balance inicial
-        SimpleDateFormat sdf = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
-        double balance = 0;
+            // Prepare date format and initialize the balance
+            SimpleDateFormat sdf = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
+            double balance = 0;
 
-        // Llenar la tabla con las transacciones
-        for (Transaction t : updatedTransactions) {
-            String charge = "", deposit = "";
+            // Fill the table with the updated transactions
+            for (Transaction t : updatedTransactions) {
+                String charge = "", deposit = "";
 
-            if (t.getType() == TransactionType.CARGO) {
-                charge = String.format("%.2f", t.getAmount());
-                balance -= t.getAmount();
-            } else if (t.getType() == TransactionType.ABONO) {
-                deposit = String.format("%.2f", t.getAmount());
-                balance += t.getAmount();
-            }
+                if (t.getType() == TransactionType.CARGO) {
+                    charge = String.format("%.2f", t.getAmount());
+                    balance -= t.getAmount();  // Subtract charges
+                } else if (t.getType() == TransactionType.ABONO) {
+                    deposit = String.format("%.2f", t.getAmount());
+                    balance += t.getAmount();  // Add deposits
+                }
 
-            model.addRow(new Object[]{
+                model.addRow(new Object[]{
                 sdf.format(t.getDate()),
                 t.getReference(),
                 t.getDescription(),
                 charge,
                 deposit,
-                String.format("%.2f", balance)
-            });
-        }
+                String.format("%.2f", balance)  // Show balance with two decimal places
+                });
+            }
         
-        JOptionPane.showMessageDialog(this, "Tasa aplicada correctamente: " + rate);
+            // Show confirmation message
+            JOptionPane.showMessageDialog(this, "Interest rate applied successfully: " + rate);
 
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingresa una tasa valida (ejemplo: 0.0004).", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        } catch (NumberFormatException e) {
+            // Show error message if the input is not a valid number
+            JOptionPane.showMessageDialog(this, "Please enter a valid rate (example: 0.0003).",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnApplyInterestRateActionPerformed
     
     /**
