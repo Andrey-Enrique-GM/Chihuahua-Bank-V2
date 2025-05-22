@@ -4,6 +4,7 @@
  */
 package mx.itson.chihuahuabank.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
@@ -43,12 +44,13 @@ public class InterestCalculatorTest {
     @Test
     public void testGenerateTransactionsWithInterest() {
         System.out.println("generateTransactionsWithInterest");
-        List<Transaction> original = null;
-        double rate = 0.0;
-        List<Transaction> expResult = null;
+        List<Transaction> original = new ArrayList<>(100); 
+        double rate = 0.1;
+        List<Transaction> expResult = new ArrayList<>(10);
         List<Transaction> result = InterestCalculator.generateTransactionsWithInterest(original, rate);
         assertEquals(expResult, result);
         
     }
+    
     
 }
